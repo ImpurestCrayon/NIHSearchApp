@@ -1,11 +1,11 @@
-from app import Pharmaceutical, Structured_Product_Label, National_Drug_Code
+
 from flask import Flask, render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 import requests
 import json
 
-def add_to_db(db, input_string):
-    from app import Pharmaceutical, Structured_Product_Label, National_Drug_Code
+def add_to_db(input_string):
+    from app import db, Pharmaceutical, Structured_Product_Label, National_Drug_Code
     if Pharmaceutical.query.filter_by(Name=input_string).first() is not None:
         print('Drug in DB.')
     else:
@@ -66,35 +66,34 @@ def get_ndcs(set_id):
     ndcs = [row['ndc'] for row in json_dict["data"]["ndcs"]]
     return ndcs
 
-# Needs to be rewritten
-def output_data(db, input_string):
+def output_data(input_string):
+    from app import db, Pharmaceutical, Structured_Product_Label, National_Drug_Code
     # Check Local DB
-    r_set = con.execute('''
-                        SELECT Name
-                        FROM Pharmaceutical
-                        ''')
-    names = [i[0] for i in r_set.fetchall()]
-    if input_string in names:
-        question_marks = ','.join(len(pharm_id(con, input_string))*'?')
-        r_set = con.execute(f'''
-                            SELECT
-                                p.Name,
-                                s.SETID,
-                                s.Version,
-                                s.publication_date,
-                                s.Title,
-                                group_concat(n.NDC)
-                            FROM Pharmaceutical AS p
-                            JOIN Structured_Product_Label AS s
-                            ON s.Pharm_ID = p.Pharm_ID
-                            JOIN National_Drug_Code AS n
-                            ON n.SPL_ID = s.SPL_ID
-                            WHERE p.Pharm_ID
-                            IN ({question_marks})
-                            GROUP BY s.SPL_ID
-                            ORDER BY s.SPL_ID
-                            ''', pharm_id(con, input_string))
-        data = r_set.fetchall()
+    if Pharmaceutical.query.filter_by(Name=input_string).first() is not None:
+        print('Drug in DB.')
+        query = db.session.query(
+                        Pharmaceutical.Name,
+                        Structured_Product_Label.SetID,
+                        Structured_Product_Label.Version,
+                        Structured_Product_Label.publication_date,
+                        Structured_Product_Label.Title,
+                        Structured_Product_Label.SPL_ID
+                    ).join(
+                        Structured_Product_Label,
+                        Pharmaceutical.Pharm_ID == Structured_Product_Label.Pharm_ID
+                    ).filter(
+                        Pharmaceutical.Name == input_string
+                    ).all()
+        data = list()
+        for row in query:
+            ndcs = db.session.query(
+                        National_Drug_Code.NDC
+                    ).filter(
+                        National_Drug_Code.SPL_ID == row[-1]
+                    ).all()
+            row = list(row)
+            row[-1] = ', '.join([ndc[0] for ndc in ndcs])
+            data.append(row)
     else:
         data = list()
         # Check NDC DB
@@ -112,7 +111,7 @@ def output_data(db, input_string):
                 drug_name = title[:title.find('[')]
             else:
                 drug_name = input_string.upper()
-            ndcs = get_ndcs(con, record["setid"])
+            ndcs = get_ndcs(record["setid"])
             row = (drug_name,
                    record["setid"],
                    record['spl_version'],
@@ -120,5 +119,5 @@ def output_data(db, input_string):
                    title,
                    ndcs)
             data.append(row)
-    column_names = ["Drug Name", "Set ID", "SPL_Ver", "Pub Date", "Title", "NDC #s"]
-    return column_names, data
+    # column_names = ["Drug Name", "Set ID", "SPL_Ver", "Pub Date", "Title", "NDC #s"]
+    return data

@@ -8,6 +8,15 @@
     {% block head %}{% endblock %}
 </head>
 <body>
+<div class="content" style="text-align: center">
+  <h1>Drug Search</h1>
+    <div class="form">
+      <form action="/verify" method="POST">
+        <input type="text" name="content">
+        <input type="submit" value="Search">
+      </form>
+    </div>
     {% block body %}{% endblock %}
+</div>
 </body>
 </html>
