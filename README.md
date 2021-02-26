@@ -14,8 +14,16 @@ $ virtualenv env
 ```
 
 3. Then run the command:
+
+Mac or Linux
 ```
 $ .\env\Scripts\activate
+```
+
+Windows Users:
+```
+$ python -m venv env
+$ env\Scripts\activate.bat
 ```
 
 4. Then install the dependencies:
