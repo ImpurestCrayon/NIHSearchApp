@@ -5,7 +5,7 @@ import requests
 import json
 
 def add_to_db(input_string):
-    from app import db, Pharmaceutical, Structured_Product_Label, National_Drug_Code
+    from application import db, Pharmaceutical, Structured_Product_Label, National_Drug_Code
     if Pharmaceutical.query.filter_by(Name=input_string).first() is not None:
         print('Drug in DB.')
     else:
@@ -67,7 +67,7 @@ def get_ndcs(set_id):
     return ndcs
 
 def output_data(input_string):
-    from app import db, Pharmaceutical, Structured_Product_Label, National_Drug_Code
+    from application import db, Pharmaceutical, Structured_Product_Label, National_Drug_Code
     # Check Local DB
     if Pharmaceutical.query.filter_by(Name=input_string).first() is not None:
         print('Drug in DB.')
@@ -111,7 +111,7 @@ def output_data(input_string):
                 drug_name = title[:title.find('[')]
             else:
                 drug_name = input_string.upper()
-            ndcs = get_ndcs(record["setid"])
+            ndcs = ','.join(get_ndcs(record["setid"]))
             row = (drug_name,
                    record["setid"],
                    record['spl_version'],

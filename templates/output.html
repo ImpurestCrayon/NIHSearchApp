@@ -1,28 +1,32 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Drug Searcher</title>
+<title>Drug Search</title>
 {% endblock %}
 
 {% block body %}
-<table>
-    <tr>
-        <th>Drug Name</th>
-        <th>Set ID</th>
-        <th>SPL Version</th>
-        <th>Pub Date</th>
-        <th>Title</th>
-        <th>NDC #s</th>
-    </tr>
-    {% for row in data %}
-        <tr>
-            <td>{{ row[0] }}</td>
-            <td>{{ row[1] }}</td>
-            <td>{{ row[2] }}</td>
-            <td>{{ row[3] }}</td>
-            <td>{{ row[4] }}</td>
-            <td>{{ row[5] }}</td>
-        </tr>
-    {% endfor %}
+<table class="content-table">
+  <thead>
+      <tr>
+          <th>Drug Name</th>
+          <th>Set ID</th>
+          <th>SPL Version</th>
+          <th>Pub Date</th>
+          <th>Title</th>
+          <th>NDC #s</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in data %}
+          <tr>
+              <td>{{ row[0] }}</td>
+              <td>{{ row[1] }}</td>
+              <td>{{ row[2] }}</td>
+              <td>{{ row[3] }}</td>
+              <td>{{ row[4] }}</td>
+              <td>{{ row[5] }}</td>
+          </tr>
+      {% endfor %}
+    </tbody>
 </table>
 {% endblock %}

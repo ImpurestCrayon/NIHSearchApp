@@ -1,8 +1,8 @@
-from capstoneFunctions import add_to_db, output_data
+from applicationFunctions import add_to_db, output_data
 from flask import Flask, render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 
-app = Flask(__name__)
+application = app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 db = SQLAlchemy(app)
 

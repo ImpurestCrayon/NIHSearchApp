@@ -1,29 +1,66 @@
 body, html {
     margin: 0;
     font-family: sans-serif;
+    background-color: #232f3e;
+}
+
+h1 {
+    color: #ff9900;
+    text-shadow: 1px 1px #ededed;
+    border-bottom: 10px solid #ededed;
+    border-bottom-style: dotted;
 }
 
 .content {
     margin: 0 auto;
-    width: 400px;
-}
-
-table, td, th {
-    border: 1px solid #aaa;
-}
-
-table {
-    border-collapse: collapse;
-    width: 100%;
-}
-
-th {
-    height: 30px;
-}
-
-td {
+    width: 0 auto;
+    padding: 50px;
     text-align: center;
-    padding: 5px;
+}
+
+.content-table {
+  border-collapse: collapse;
+  margin: 25px 0;
+  min-width: 500px;
+  border-radius: 5px 5px 5px 5px;
+  overflow: hidden;
+  box-shadow: 0 0 100px rgba(0, 0, 0, 100);
+}
+
+.content-table thead tr {
+  background-color: #ff9900;
+  color: #1c1919;
+  text-align: center;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+.content-table th,
+.content-table td {
+  padding: 12px 15px;
+}
+
+.content-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.content-table tbody tr:nth-of-type(odd) {
+  background-color: #ededed;
+}
+
+.content-table tbody tr:nth-of-type(even) {
+  background-color: #bfbfbf;
+}
+
+.content-table tbody tr:last-of-type {
+  border-bottom: 5px solid #ff9900;
+}
+
+.content-table tbody td {
+  border-left: 1px solid #dddddd;
+  border-right: 1px solid #dddddd;
+  padding: 5px 5px;
+  font-size: 8px;
 }
 
 .form {
@@ -31,5 +68,5 @@ td {
 }
 
 #content {
-    width: 70%;
+    width: 250px;
 }
