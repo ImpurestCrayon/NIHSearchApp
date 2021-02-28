@@ -13,7 +13,11 @@
     <div class="form">
       <form action="/verify" method="POST">
         <input type="text" name="content" id="content">
-        <input type="submit" value="Search">
+        <input class="search-input" type="submit" value="Search">
+        <p>
+          Add to data base
+          <input type="checkbox" name="add-to-db">
+        </p>
       </form>
     </div>
     {% block body %}{% endblock %}

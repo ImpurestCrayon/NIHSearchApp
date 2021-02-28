@@ -11,11 +11,25 @@ h1 {
     border-bottom-style: dotted;
 }
 
+p {
+  color: #ededed;
+  border-bottom: 1px solid #ededed;
+}
+
+.form {
+    margin-top: 20px;
+}
+
 .content {
     margin: 0 auto;
     width: 0 auto;
     padding: 50px;
     text-align: center;
+}
+
+.search-input {
+  color: #1c1919;
+  font-weight: bold;
 }
 
 .content-table {
@@ -61,10 +75,6 @@ h1 {
   border-right: 1px solid #dddddd;
   padding: 5px 5px;
   font-size: 8px;
-}
-
-.form {
-    margin-top: 20px;
 }
 
 #content {

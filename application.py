@@ -13,7 +13,6 @@ class Pharmaceutical(db.Model):
 
     def __repr__(self):
             return "<Pharmaceutical(Pharm ID='%s')>" % (self.Pharm_ID)
-
 class Structured_Product_Label(db.Model):
     __tablename__ = 'Structured_Product_Label'
     SPL_ID = db.Column(db.Integer, primary_key=True)
@@ -27,7 +26,6 @@ class Structured_Product_Label(db.Model):
 
     def __repr__(self):
             return "<Structured_Product_Label(SPL ID='%s')>" % (self.SPL_ID)
-
 class National_Drug_Code(db.Model):
     __tablename__ = 'National_Drug_Code'
     NDC_ID = db.Column(db.Integer, primary_key=True)
@@ -48,7 +46,8 @@ def verify():
     if request.method == 'POST':
         content = request.form['content']
         try:
-            # add_to_db(db, input_string)
+            if request.form.get('add-to-db'):
+                add_to_db(content)
             return redirect(f'/output/{content}')
         except:
             return 'There was an issue adding this to the DB'
