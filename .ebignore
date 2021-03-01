@@ -1,0 +1,6 @@
+__pycache__/
+.git/
+env/
+.gitignore/
+create_db.py/
+README.md
